@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-// Hasta bilgileri için struct tanýmý
+// Hasta bilgileri icin struct tanýmý
 typedef struct Hasta {
     char ad[50];
     char soyad[50];
@@ -11,7 +11,7 @@ typedef struct Hasta {
     int yas;
     char cinsiyet;
     char sikayet[100];
-    int oncelik;   // 1: Kritik, 2: Öncelikli, 3: Normal
+    int oncelik;   // 1: Kritik, 2: Oncelikli, 3: Normal
     char receteNo[15];
     char adres[100];
     char telefonNo[20];
@@ -25,7 +25,7 @@ typedef struct Hasta {
     struct Hasta *sonraki;
 } Hasta;
 
-// Baðlý listenin baþlangýcý
+// Bagli listenin baslangici
 Hasta *ilk = NULL;
 
 // Triaj deðerlendirme fonksiyonu
@@ -38,13 +38,13 @@ int triajDegerlendir(char *sikayet) {
         return 3;
 }
 
-// Rastgele reçete numarasý oluþturma fonksiyonu
+// Rastgele recete numarasi olusturma fonksiyonu
 void receteNoOlustur(char *receteNo) {
     sprintf(receteNo, "RX-%d", rand() % 1000000);
 }
 
-// Ateþ derecesini belirleme fonksiyonu
-// <38.0 => Normal, 38.0-39.9 => Yüksek, >=40.0 => Havale
+// Ates derecesini belirleme fonksiyonu
+// <38.0 => Normal, 38.0-39.9 => Yuksek, >=40.0 => Havale
 void atesDerecelendir(Hasta *hasta) {
     if (hasta->ates < 38.0)
         strcpy(hasta->atesDerecesi, "Normal");
@@ -55,8 +55,8 @@ void atesDerecelendir(Hasta *hasta) {
 }
 
 // Tansiyon derecelendirmesi fonksiyonu
-// Küçük tansiyon: <6.0 => Düþük, 6.0-8.0 => Normal, >8.0 => Yüksek
-// Büyük tansiyon: <9.0 => Düþük, 9.0-12.0 => Normal, >12.0 => Yüksek
+// Kucuk tansiyon: <6.0 => Dusuk, 6.0-8.0 => Normal, >8.0 => Yuksek
+// Buyuk tansiyon: <9.0 => Dusuk, 9.0-12.0 => Normal, >12.0 => Yuksek
 void tansiyonDerecelendir(Hasta *hasta) {
     if (hasta->kucukTansiyon < 6.0)
         strcpy(hasta->kucukTansiyonDerecesi, "Duþuk");
@@ -94,7 +94,7 @@ void hastaEkle(char *ad, char *soyad, char *tcNo, int yas, char cinsiyet, char *
     tansiyonDerecelendir(yeni);
     yeni->sonraki = NULL;
     
-    // Triaj öncelik sýrasýna göre ekleme
+    // Triaj oncelik sirasina göre ekleme
     if (ilk == NULL || yeni->oncelik < ilk->oncelik) {
         yeni->sonraki = ilk;
         ilk = yeni;
@@ -107,9 +107,9 @@ void hastaEkle(char *ad, char *soyad, char *tcNo, int yas, char cinsiyet, char *
     }
 }
 int main() {
-    srand(time(NULL));  // Rastgele sayý üreticisini baþlat
+    srand(time(NULL));  // Rastgele sayi ureticisini baþlat
     
-    char devam = 'E';  // Hasta ekleme döngüsünü kontrol eder
+    char devam = 'E';  // Hasta ekleme dongusunu kontrol eder
     
     while (devam == 'E' || devam == 'e') {
         char ad[50], soyad[50], tcNo[12], sikayet[100], adres[100], telefonNo[20], alerji[100];
@@ -117,28 +117,28 @@ int main() {
         char cinsiyet;
         float ates;
         
-        // Kullanýcýdan hasta bilgilerini al
+        // Kullanicidan hasta bilgilerini al
         printf("\nHasta bilgilerini girin:\n");
         
         printf("Ad: ");
         fgets(ad, sizeof(ad), stdin);
-        ad[strcspn(ad, "\n")] = '\0';  // Yeni satýr karakterini kaldýr
+        ad[strcspn(ad, "\n")] = '\0';  // Yeni satir karakterini kaldir
         
         printf("Soyad: ");
         fgets(soyad, sizeof(soyad), stdin);
-        soyad[strcspn(soyad, "\n")] = '\0';  // Yeni satýr karakterini kaldýr
+        soyad[strcspn(soyad, "\n")] = '\0';  // Yeni satýr karakterini kaldir
         
         printf("TC Kimlik No: ");
         fgets(tcNo, sizeof(tcNo), stdin);
-        tcNo[strcspn(tcNo, "\n")] = '\0';  // Yeni satýr karakterini kaldýr
+        tcNo[strcspn(tcNo, "\n")] = '\0';  // Yeni satýr karakterini kaldir
         
         printf("Yas: ");
         scanf("%d", &yas);
-        getchar();  // Fazladan giriþ karakterini temizle
+        getchar();  // Fazladan giris karakterini temizle
         
         printf("Cinsiyet (E/K): ");
         scanf("%c", &cinsiyet);
-        getchar();  // Fazladan giriþ karakterini temizle
+        getchar();  // Fazladan giris karakterini temizle
         
         printf("Sikayet: ");
         fgets(sikayet, sizeof(sikayet), stdin);
@@ -158,15 +158,15 @@ int main() {
         
         printf("Kucuk Tansiyon: ");
         scanf("%d", &kucukTansiyon);
-        getchar();  // Fazladan giriþ karakterini temizle
+        getchar();  // Fazladan giris karakterini temizle
         
         printf("Buyuk Tansiyon: ");
         scanf("%d", &buyukTansiyon);
-        getchar();  // Fazladan giriþ karakterini temizle
+        getchar();  // Fazladan giris karakterini temizle
         
         printf("Ates: ");
         scanf("%f", &ates);
-        getchar();  // Fazladan giriþ karakterini temizle
+        getchar();  // Fazladan giris karakterini temizle
         
         // Hasta bilgilerini ekle
         hastaEkle(ad, soyad, tcNo, yas, cinsiyet, sikayet, adres, telefonNo, alerji, buyukTansiyon, kucukTansiyon, ates);
@@ -177,7 +177,7 @@ int main() {
         getchar();  // Fazladan giriþ karakterini temizle
     }
     
-    // Hasta listesini yazdýr
+    // Hasta listesini yazdir
     Hasta *temp = ilk;
     printf("\n--- Acil Servis Hasta Listesi ---\n");
     while (temp != NULL) {
